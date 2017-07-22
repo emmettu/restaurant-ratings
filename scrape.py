@@ -3,6 +3,7 @@ from urllib.parse import quote_plus
 from unicodedata import normalize
 import requests
 import re
+import sys
 
 
 def get_google_page(query):
@@ -80,10 +81,11 @@ def get_rating_number(rating):
 
 
 if __name__ == '__main__':
-    content = get_google_page("Chipotle Toronto")
-    # content = open("test.html", "r").read()
+    query = " ".join(sys.argv[1:])
+    content = get_google_page(query)
     rating_list = parse_ratings(content)
     rating_list = filter_ratings(rating_list)
-    print(rating_list)
     average = get_average(rating_list)
+
+    print(rating_list)
     print("{:.0f}%".format(round(average)))
