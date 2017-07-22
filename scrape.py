@@ -18,7 +18,7 @@ def parse_ratings(content):
     results = soup.find_all("div", {"class": "g"})
     google_result = get_google_rating(soup)
     return [get_rating(result) for result in results if has_rating(result)]\
-        +  google_result
+        + google_result
 
 
 def get_google_rating(soup):
@@ -30,6 +30,7 @@ def get_google_rating(soup):
     votes = soup.find("span", {"style": "color:#777"}).get_text()
     votes = votes.split(" ")[1]
     return [(rating.get_text(), votes, "google")]
+
 
 def get_rating(result):
     rating_text = result.find("div", {"class": "f slp"}).get_text()
@@ -74,6 +75,7 @@ def get_average(ratings):
         score_sum += vote_number * rating_number
 
     return (score_sum / total_votes) * 100
+
 
 def get_rating_number(rating):
     num, den = rating.split("/") if "/" in rating else (rating, 5)
